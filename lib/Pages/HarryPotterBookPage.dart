@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:learn_json_serializable/Models/HarryPotterBookModel.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 class HarryPotterBookPage extends StatefulWidget {
   const HarryPotterBookPage({super.key});
@@ -16,6 +17,8 @@ class HarryPotterBookPage extends StatefulWidget {
 
 class _HomePageState extends State<HarryPotterBookPage> {
   List<HarryPotterBookModel> booksList = [];
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   @override
   void initState() {
     super.initState();
@@ -37,6 +40,11 @@ class _HomePageState extends State<HarryPotterBookPage> {
     } else {
       print("Failed to fetch books: ${response.statusCode}");
     }
+    _refreshController.refreshCompleted();
+  }
+
+  void _onRefresh() async{
+   fetchBooks();
   }
 
   int _getCrossAxisCount(BuildContext context) {
@@ -60,38 +68,45 @@ class _HomePageState extends State<HarryPotterBookPage> {
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: const Text(
-          "JSON SERIALIZABLE",
+          "HARRY POTTER COMICS",
           style: TextStyle(
               letterSpacing: 1,
               color: Colors.white,
-              fontSize: 24,
+              fontSize: 22,
               fontWeight: FontWeight.w500),
         ),
       ),
-      body: booksList.isEmpty
-          ? const Center(
-              child: SizedBox(
-                width: 150,
-                height: 150,
-                child: CircularProgressIndicator(
-                  color: Colors.blue,
-                  strokeWidth: 2,
+      body: SmartRefresher(
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        enablePullDown: true,
+        header: const ClassicHeader(refreshStyle: RefreshStyle.Follow,),
+        child: booksList.isEmpty
+            ? const Center(
+                child: SizedBox(
+                  width: 150,
+                  height: 150,
+                  child: CircularProgressIndicator(
+                    color: Colors.blue,
+                    strokeWidth: 2,
+                  ),
                 ),
-              ),
-            )
-          : GridView.builder(
-                padding: const EdgeInsets.all(10),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: _getCrossAxisCount(context), // Responsive columns
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 2
+              )
+            : GridView.builder(
+              physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.all(10),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: _getCrossAxisCount(context), // Responsive columns
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 2
+                  ),
+                  itemCount: booksList.length,
+                  itemBuilder: (context, index) {
+                    return BookView(model: booksList[index]);
+                  },
                 ),
-                itemCount: booksList.length,
-                itemBuilder: (context, index) {
-                  return BookView(model: booksList[index]);
-                },
-              ),
+      ),
     ));
   }
 }
@@ -119,9 +134,7 @@ double _getResponsiveFontSize(BuildContext context) {
   @override
   Widget build(BuildContext context) {
     double fontSize = _getResponsiveFontSize(context);
-    return AnimatedContainer(
-      duration: const Duration(seconds: 1),
-      curve: Curves.easeIn,
+    return Container(
       width: double.maxFinite,
       decoration: const BoxDecoration(
         color: Colors.white,
