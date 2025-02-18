@@ -1,12 +1,13 @@
+// ignore: file_names
 import 'package:json_annotation/json_annotation.dart';
-part 'Book.g.dart';
+part 'HarryPotterBookModel.g.dart';
 
 @JsonSerializable()
-class BookModel {
+class HarryPotterBookModel {
   final int number, pages, index;
   final String title, originalTitle, releaseDate, description, cover;
 
-  BookModel(
+  HarryPotterBookModel(
       {required this.number,
       required this.pages,
       required this.index,
@@ -16,6 +17,6 @@ class BookModel {
       required this.description,
       required this.cover});
 
-  factory BookModel.fromJson(Map<String, dynamic> json) => _$BookModelFromJson(json);
-  Map<String,dynamic> toJson ()=> _$BookModelToJson(this);
+  factory HarryPotterBookModel.fromJson(Map<String, dynamic> json) => _$HarryPotterBookModelFromJson(json);
+  Map<String,dynamic> toJson ()=> _$HarryPotterBookModelToJson(this);
 }

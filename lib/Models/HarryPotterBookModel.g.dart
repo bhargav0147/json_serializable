@@ -1,12 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'Book.dart';
+part of 'HarryPotterBookModel.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-BookModel _$BookModelFromJson(Map<String, dynamic> json) => BookModel(
+HarryPotterBookModel _$HarryPotterBookModelFromJson(
+        Map<String, dynamic> json) =>
+    HarryPotterBookModel(
       number: (json['number'] as num).toInt(),
       pages: (json['pages'] as num).toInt(),
       index: (json['index'] as num).toInt(),
@@ -17,7 +19,9 @@ BookModel _$BookModelFromJson(Map<String, dynamic> json) => BookModel(
       cover: json['cover'] as String,
     );
 
-Map<String, dynamic> _$BookModelToJson(BookModel instance) => <String, dynamic>{
+Map<String, dynamic> _$HarryPotterBookModelToJson(
+        HarryPotterBookModel instance) =>
+    <String, dynamic>{
       'number': instance.number,
       'pages': instance.pages,
       'index': instance.index,

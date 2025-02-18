@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learn_json_serializable/Pages/Home.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:learn_json_serializable/Pages/HarryPotterBookPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,10 +17,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        
+        textTheme: GoogleFonts.nunitoTextTheme(),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const HarryPotterBookPage(),
     );
   }
 }
