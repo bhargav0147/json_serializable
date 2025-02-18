@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:learn_json_serializable/Pages/HarryPotterBookPage.dart';
+
+import 'Pages/HarryPotter/HarryPotterHomePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.nunitoTextTheme(),
         useMaterial3: true,
       ),
-      home: const HarryPotterBookPage(),
+      home: const HarryPotterHomePage(),
     );
   }
 }
